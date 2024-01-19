@@ -48,6 +48,7 @@ public class XMLProducer {
 						fieldNode = root.CreateElement("field"); 
 						fieldNode.setValue(field.getName());
 						fieldNode.setAttribute("scope",Outils.getScope(field.getModifiers()));
+						fieldNode.setAttribute("type", field.getType().getSimpleName());
 						fieldsNode.add(fieldNode);
 					
 					}
@@ -55,6 +56,12 @@ public class XMLProducer {
 				
 			}
 			classNode.add(fieldsNode);
+			
+			
+			
+			
+			
+			
 			
 			
 			XMLNode interfacesNode = root.CreateElement("interfaces"); 
@@ -84,8 +91,24 @@ public class XMLProducer {
 			}
 			classNode.add(methodsNode);
 			
+			List<Class<?>> associatedClasses = cd.getAssociatedClass();
+			XMLNode associationsNode = root.CreateElement("compositions");
+			
+			if(associatedClasses != null) {
+				XMLNode associationNode; 
+				for (Class<?> class1 : associatedClasses) {
+					associationNode= root.CreateElement("composition");
+					String name = class1.getSimpleName();
+					if(name.contains("\\[")) {
+						name = name.split("\\[")[0];
+					}
+					associationNode.setValue(name);
+					associationsNode.add(associationNode);
+				}
+			}
 			
 			
+			classNode.add(associationsNode);
 			root.add(classNode);
 			root.save();
 		}

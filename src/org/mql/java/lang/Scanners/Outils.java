@@ -28,18 +28,18 @@ public class Outils {
 		else {
 			portee += "Default";
 		}
-			portee +=" ";
+			
 		if(Modifier.isFinal(modifier)) {
-			portee +="final";
+			portee +=" final";
 		}
 		if(Modifier.isAbstract(modifier)) {
-			portee +="abstract";
+			portee +=" abstract";
 		}
 		if(Modifier.isStatic(modifier)) {
-			portee +="static";
+			portee +=" static";
 		}
 		if(Modifier.isSynchronized(modifier)) {
-			portee +="synchronized";
+			portee +=" synchronized";
 		}
 		
 		
@@ -47,7 +47,7 @@ public class Outils {
 	}
 	
 	public static String getName(Class<?> c) {
-		if(c != null )return c.getSimpleName() +" ";
+		if(c != null )return c.getSimpleName();
 		return null;
 	}
 	public static String isClass(Class<?> cls) {
@@ -55,7 +55,19 @@ public class Outils {
 		return "class";
 	}
 
-
+	public static List<Class<?>> getAssociations(Class<?>cls){
+			Field fields[] = cls.getDeclaredFields();
+			if (fields != null) {
+				List<Class<?>> listClass = new LinkedList<Class<?>>();
+				for (Field field : fields) {
+					if(!field.getType().isPrimitive()) {
+						listClass.add(field.getType());
+					}
+				}
+				return listClass;
+			}
+			return null; 
+	}
 	/*public static Class<?> getMotherClass(Class<?> cls) {
 		Class<?> mother = cls.getSuperclass();
 		if(mother != null && !"java.lang.Object".equals(mother.getName())) 
@@ -101,8 +113,11 @@ public class Outils {
 	*/
 	public static String getMotherClass(Class<?> cls) {
 		Class<?> mother = cls.getSuperclass();
-		if(mother != null && !"java.lang.Object".equals(mother.getName())) 
-			return "extends "+mother.getName()+" " ; 
+		if(mother != null && !"java.lang.Object".equals(mother.getName())) {
+			String name = mother.getName();
+			name = name.substring(name.lastIndexOf(".")+1);
+			return name; 
+			}
 		return " ";
 	}
 	public static List<String> getInterfaces(Class<?> c) {

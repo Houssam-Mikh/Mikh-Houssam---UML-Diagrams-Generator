@@ -4,12 +4,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 public class ClassData {
-	/*
-	private Class<?> mother; 
-	private List<Class<?>> interfaces;
-	private List<Field> fields; 
-	private List<Method> methods;
-	*/
+	
 	private String scope; 
 	private String type; 
 	private String name; 
@@ -17,7 +12,7 @@ public class ClassData {
 	private List<String> interfaces;
 	private List<Field> fields; 
 	private List<Method> methods;
-	
+	private List<Class<?>>associatedClass;
 	
 	
 	public ClassData(String qName) {
@@ -31,7 +26,7 @@ public class ClassData {
 				this.interfaces= Outils.getInterfaces(cls);
 				this.fields    = Outils.getFields(cls);
 				this.methods   = Outils.getMethods(cls);
-				
+				this.associatedClass= Outils.getAssociations(cls);
 				/*
 				 * TODO : determiner la composition et l'agrégation :
 				 * 
@@ -44,6 +39,16 @@ public class ClassData {
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+
+	public List<Class<?>> getAssociatedClass() {
+		return associatedClass;
+	}
+
+
+	public void setAssociatedClass(List<Class<?>> associatedClass) {
+		this.associatedClass = associatedClass;
 	}
 
 

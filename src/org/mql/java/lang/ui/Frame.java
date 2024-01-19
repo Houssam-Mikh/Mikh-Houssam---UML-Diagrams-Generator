@@ -16,7 +16,7 @@ public class Frame extends JFrame{
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		
         JScrollPane scrollPane = new JScrollPane(contentPanel);
-        scrollPane.setPreferredSize(new java.awt.Dimension(1200, 700));
+       // scrollPane.setPreferredSize(new java.awt.Dimension(1200, 700));
         getContentPane().add(scrollPane);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
